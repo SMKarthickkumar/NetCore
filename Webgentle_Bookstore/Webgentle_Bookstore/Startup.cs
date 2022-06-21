@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,6 +25,7 @@ namespace Webgentle_Bookstore
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddRazorPages();
+            services.AddControllersWithViews();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -40,6 +42,34 @@ namespace Webgentle_Bookstore
                 app.UseHsts();
             }
 
+            #region middleware trail
+            /*
+            app.Use(async (context, next) =>
+            {
+                await context.Response.WriteAsync("Hello from my first middleware");
+                await next();
+
+                await context.Response.WriteAsync("     |||   Response");
+            });
+
+            app.Use(async (context, next) =>
+            {
+                await context.Response.WriteAsync("Hello from my second middleware");
+                await next();
+
+                await context.Response.WriteAsync("     |||   Response 2");
+            });
+
+            app.Use(async (context, next) =>
+            {
+                await context.Response.WriteAsync("Hello from my third middleware");
+                await next();
+
+                //await context.Response.WriteAsync("     |||   Response 2");
+            });
+            */
+            #endregion middleware
+
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 
@@ -49,7 +79,8 @@ namespace Webgentle_Bookstore
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapRazorPages();
+                //endpoints.MapRazorPages();
+                endpoints.MapDefaultControllerRoute();
             });
         }
     }
